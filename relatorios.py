@@ -67,4 +67,3 @@ def tarefas_por_usuario():
        return
 
     for t in filtradas:
-        print(f"{t.get('Tarefa', 'N/A')} - {t.get('Descricão', 'N/A')} - Prioridade: {t.get('Nivel de Prioridade', 'N/A')} - Data Limite: {t.get('Data Limite', 'N/A')} - Status: {t.get('Status', 'N/A')} - Usuário: {t.get('Usuario', 'N/A')}")
