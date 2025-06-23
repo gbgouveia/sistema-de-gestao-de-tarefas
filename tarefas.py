@@ -1,72 +1,79 @@
-
-
-def criar_tarefa(voltar):
-    while True:
-        print("===================================")
-        print("         MENU TAREFAS              ")
-        print("===================================")
-        print("1. Criar Tarefa")
-        print("2. Listar Tarefas")
-        print("3. Voltar ao Menu Principal")
-        opcao = input("Escolha uma opção: ")
-
-        if opcao == "1":
-            criador_de_tarefa()
-        elif opcao == "2":
-            gerenciar_tarefas()
-        elif opcao == "3":
-           return voltar
-        elif opcao == "4":
-            print("Saindo...")
-            break
-        
-        else:
-            print("Opção inválida. Tente novamente.")
-"""  """
+import relatorios
+import usuarios
 
 lista_tarefas = []
 
-def criador_de_tarefa():
+def criar_tarefa(voltar):
     while True:
-        print("----------------------- CRIAR TAREFA ----------------------------")
+            print("\n===================================")
+            print("            MENU TAREFAS           ")
+            print("===================================")
+            print("1. Criar Tarefa")
+            print("2. Listar Tarefas")
+            print("3. Voltar ao Menu Principal")
+            print("===================================")
 
-        titulo_da_tarefa = input("Nome da tarefa: ")
-        descricao = input("Descrição: ")
-        prioridade = input("Nivel de prioridade: Alta, Média, Baixa: ")
-        data_limite = input("Data limite: ")
-        pendencia = input("Pendente ou Concluída: ")
-        usuario = float(input("Para quem é esta tarefa? (apenas o número): "))
-       
-    
+            opcao = input("Escolha uma opção: ")
+
+            if opcao == "1":
+                criador_de_tarefa()
+            elif opcao == "2":
+                gerenciar_tarefas()
+            elif opcao == "3":
+                return voltar
+            else:
+                print("Opção inválida. Tente novamente.")
+
+
+# ===================== CRIAR NOVA TAREFA ======================
+
+def criador_de_tarefa():
+    global lista_tarefas
+
+    while True:
+        print("\n=========== CADASTRAR NOVA TAREFA ===========")
+
+        titulo = input("Título da tarefa: ").strip()
+        descricao = input("Descrição: ").strip()
+        prioridade = input("Prioridade (Alta, Média, Baixa): ").strip().capitalize()
+        data_limite = input("Data limite (DD/MM/AAAA): ").strip()
+        status = input("Status (Pendente ou Concluída): ").strip().capitalize()
+        usuario = input("Para quem é esta tarefa? (login do usuário): ").strip()
+         
         tarefa = {
-            "Tarefa": titulo_da_tarefa,
+             "Título": titulo,
             "Descrição": descricao,
-            "Nivel de Prioridade": prioridade,
+            "Prioridade": prioridade,
             "Data Limite": data_limite,
-            "Pendencia": pendencia,
-            "Usuario": usuario,
+             "Status": status,
+            "Usuário": usuario
         }
 
         lista_tarefas.append(tarefa)
-        print("Tarefa criada com sucesso!!")
+        print("Tarefa cadastrada com sucesso!")
 
-        continuacao = input("Quer cadastrar uma nova tarefa? (s/n): ").lower()
-        if continuacao == "n":
-            return 
+        continuar = input("Deseja cadastrar outra tarefa? (s/n): ").lower()
+        if continuar != 's':
+            break
 
+
+# ===================== GERENCIAR TAREFAS ======================
 
 def gerenciar_tarefas():
+    global lista_tarefas
+
     if not lista_tarefas:
         print("Nenhuma tarefa cadastrada.")
         return
-
-    print("----------------------- LISTA DE TAREFAS ----------------------------")
-    for i, tarefa in enumerate(lista_tarefas, start=1):
-        print(f"{i}. {tarefa['Tarefa']} - {tarefa['Descrição']} - {tarefa['Nivel de Prioridade']} - {tarefa['Data Limite']} - Pendencia: {tarefa['Pendencia']} - Usuario: {tarefa['Usuario']}")
-
-    print("Digite o número da tarefa para editar ou '0' para voltar ao menu.")
-    opcao = input("Escolha uma opção: ")
     
+    print("\n=========== LISTA DE TAREFAS ===========")
+    for i, tarefa in enumerate(lista_tarefas, start=1):
+         print(f"{i}. {tarefa['Título']} | {tarefa['Descrição']} | Prioridade: {tarefa['Prioridade']} | "
+              f"Data: {tarefa['Data Limite']} | Status: {tarefa['Status']} | Usuário: {tarefa['Usuário']}")
+    print("=========================================")
+
+    print("\nDigite o número da tarefa para editar ou '0' para voltar.")
+    opcao = input("Escolha uma opção: ")
     if opcao == "0":
         return
     else:
@@ -75,61 +82,76 @@ def gerenciar_tarefas():
             if 0 <= indice < len(lista_tarefas):
                 editar_tarefa(indice)
             else:
-                print("Opção inválida.")
+                print("Opção invalida")
         except ValueError:
-            print("Entrada inválida. Por favor, digite um número.")
+            print("Entrada invalida. Use numeros.")
 
 
+# ===================== EDITAR TAREFA ======================
 
 def editar_tarefa(indice):
-    tarefa = lista_tarefas[indice]
-    print(f"Editando tarefa: {tarefa['Tarefa']}")
-    
-    titulo_da_tarefa = input("Novo nome da tarefa (deixe em branco para manter): ") or tarefa['Tarefa']
-    descricao = input("Nova descrição (deixe em branco para manter): ") or tarefa['Descrição']
-    prioridade = input("Nova prioridade (Alta, Média, Baixa) (deixe em branco para manter): ") or tarefa['Nivel de Prioridade']
-    data_limite = input("Nova data limite (deixe em branco para manter): ") or tarefa['Data Limite']
-    pendencia = input("Novo status (Pendente ou Concluída) (deixe em branco para manter): ") or tarefa['Pendencia']
-    usuario = input("Novo usuário (deixe em branco para manter): ") or tarefa['Usuario']
+    global lista_tarefas
 
+    tarefa = lista_tarefas[indice]
+    print(f"\nEditando tarefa: {tarefa['Título']}")
+
+    titulo = input(f"Novo título ({tarefa['Título']}): ") or tarefa['Título']
+    descricao = input(f"Nova descrição ({tarefa['Descrição']}): ") or tarefa['Descrição']
+    prioridade = input(f"Nova prioridade ({tarefa['Prioridade']}): ") or tarefa['Prioridade']
+    data_limite = input(f"Nova data limite ({tarefa['Data Limite']}): ") or tarefa['Data Limite']
+    status = input(f"Novo status ({tarefa['Status']}): ") or tarefa['Status']
+    usuario = input(f"Novo usuário ({tarefa['Usuário']}): ") or tarefa['Usuário']
 
     lista_tarefas[indice] = {
-        "Tarefa": titulo_da_tarefa,
+        "Título": titulo,
         "Descrição": descricao,
-        "Nivel de Prioridade": prioridade,
+        "Prioridade": prioridade,
         "Data Limite": data_limite,
-        "Pendencia": pendencia,
-        "Usuario": usuario,
+        "Status": status,
+        "Usuário": usuario
     }
-    
-    print("Tarefa atualizada com sucesso!")
-    
 
+    print("Tarefa atualizada com sucesso!")
+
+# ===================== EXCLUIR TAREFA ======================
 
 def excluir_tarefa(indice):
+    global lista_tarefas
+
     if 0 <= indice < len(lista_tarefas):
-        tarefa_excluida = lista_tarefas.pop(indice)
-        print(f"Tarefa '{tarefa_excluida['Tarefa']}' excluída com sucesso!")
+        tarefa = lista_tarefas.pop(indice)
+        print(f"Tarefa '{tarefa['Título']}' excluída com sucesso!")
+
     else:
-        print("Índice inválido. Nenhuma tarefa foi excluída.")
-        
+        print(f"\nÍndice {indice} fora do intervalo. Nenhuma tarefa excluída.")
+
+# ===================== FILTRAR POR STATUS ======================
+
+def filtrar_tarefas_por_status(status):
+    global lista_tarefas
+    filtradas = [t for t in lista_tarefas if t['Status'].lower() == status.lower()]
+
+    if not filtradas:
+        print(f"Nenhuma tarefa com status '{status}'.")
+    else:
+         print(f"\nTarefas com status '{status}':")
+    for t in filtradas:
+            print(f"- {t['Título']} | {t['Descrição']} | Usuário: {t['Usuário']}")
 
 
-def filtrar_tarefas_por_status(pendencia):
-    tarefas_filtradas = [tarefa for tarefa in lista_tarefas if tarefa.get('Pendencia') == pendencia]
-    if not tarefas_filtradas:
-        print(f"Nenhuma tarefa encontrada com o status '{pendencia}'.") 
+# ===================== FILTRAR POR PRIORIDADE ======================
+
+def filtrar_por_prioridade(prioridade):
+    global lista_tarefas
+
+    filtradas = [t for t in lista_tarefas if t['Prioridade'].lower() == prioridade.lower()]
+
+    if not filtradas:
+        print(f"Nenhuma tarefa com prioridade '{prioridade}'.")
+
     else:
-        print(f"Tarefas com status '{pendencia}':")
-        for tarefa in tarefas_filtradas:
-            print(f"{tarefa['Tarefa']} - {tarefa['Descrição']} - {tarefa['Nivel de Prioridade']} - {tarefa['Data Limite']} - Pendencia: {tarefa['Pendencia']} - Usuario: {tarefa['Usuario']}")
-            
-            
-def prioridade():
-    tarefas_prioridade = [tarefa for tarefa in lista_tarefas if tarefa.get('Nivel de Prioridade')]
-    if not tarefas_prioridade:
-        print(f"Nenhuma tarefa encontrada com a prioridade.")
-    else:
-        print(f"Tarefas com prioridade:")
-        for tarefa in tarefas_prioridade:
-            print(f"{tarefa['Tarefa']} - {tarefa['Descrição']} - {tarefa['Nivel de Prioridade']} - {tarefa['Data Limite']} - Pendencia: {tarefa['Pendencia']} - Usuario: {tarefa['Usuario']}")
+        print(f"\nTarefas com prioridade '{prioridade}':")
+        for t in filtradas:
+            print(f"- {t['Título']} | {t['Descrição']} | Usuário: {t['Usuário']}")
+
+
