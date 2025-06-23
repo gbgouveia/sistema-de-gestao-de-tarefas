@@ -1,5 +1,7 @@
 lista_usuarios = []
-while True:
+
+def usuarios(voltar):
+    while True:
         print("===================================")
         print("         MENU DE USUÁRIOS             ")
         print("===================================")
@@ -15,9 +17,9 @@ while True:
         elif opcao == "2":
             listar_usuarios()
         elif opcao == "3":
-           ativar_inativar_usuario()
+            ativar_inativar_usuario()
         elif opcao == "4":
-            return voltar
+          return voltar
         else:
             print("Opção inválida. Tente novamente.")
 
@@ -58,6 +60,8 @@ while True:
         if continuar !=  "s":
             break
            
+#linha 1 a linha 60 foi alterado por Brunna
+
 # =================== LISTAR USUÁRIOS ===================
 
 def listar_usuarios():
@@ -72,19 +76,19 @@ def listar_usuarios():
 
 
     print("----------------------- ATIVAR/INATIVAR USUÁRIO ----------------------------")
-    def ativar_inativar_usuario():
-     lista_usuarios = ():
+def ativar_inativar_usuario():
+        lista_usuarios ()
 
-    if not lista_usuarios:
-        return
+        if not lista_usuarios:
+         return
     
-    login = input("\n Digite o login do usuário para alterar o status (ou digite 'voltar' para cancelar): ").strip()
-    if login.lower() == 'voltar':
-        return
+        login = input("\n Digite o login do usuário para alterar o status (ou digite 'voltar' para cancelar): ").strip()
+        if login.lower() == 'voltar':
+            return
     
-    for usuario in lista_usuarios:
-        if usuario['Login'] == login:
-            status_atual = usuario['Status']
+        for usuario in lista_usuarios:
+            if usuario['Login'] == login:
+                status_atual = usuario['Status']
             print(f"Status atual do usuário {usuario['Nome']}: {status_atual}")
 
             novo_status = input("Digite o novo status (Ativo/Inativo) ou deixe em branco para manter o status atual: ").strip().capitalize()
