@@ -1,5 +1,5 @@
 lista_usuarios = []
-
+#def adicionado
 def usuarios(voltar):
     while True:
         print("===================================")
@@ -11,6 +11,7 @@ def usuarios(voltar):
         print("4. Voltar ao menu principal")
         print("===================================")
         opcao = input("Escolha uma opção: ")
+
 
         if opcao == "1":
             cadastrar_novo_usuario()
