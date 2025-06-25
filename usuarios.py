@@ -24,12 +24,14 @@ def usuarios(voltar):
         else:
             print("Opção inválida. Tente novamente.")
 
+            
+lista_usuarios = []
 
+def cadastrar_novo_usuario():
+           
 
-        def cadastrar_novo_usuario():
-    
-           while True:
-            print("\n----------------------- CADASTRAR NOVO USUÁRIO ----------------------------")
+    while True:
+        print("\n----------------------- CADASTRAR NOVO USUÁRIO ----------------------------")
 
         nome = input("Nome Completo:").strip()
         login = input("login: ").strip()
@@ -66,20 +68,18 @@ def usuarios(voltar):
 # =================== LISTAR USUÁRIOS ===================
 
 def listar_usuarios():
-    print("\n----------------------- LISTAR USUÁRIOS ----------------------------")
-   
    
     print("----------------------- LISTA DE USUÁRIOS ----------------------------")
     for i, usuario in enumerate(lista_usuarios, start=1):
-        print(f"{i}. Nome. {usuario['Nome']} | login: {usuario['Login']} | status: {usuario['status']}")
+        print(f"{i}. Nome. {usuario['Nome']} | login: {usuario['Login']} | status: {usuario['Status']}")
         print("------------------------------------------------------------------")
 
 
 
-    print("----------------------- ATIVAR/INATIVAR USUÁRIO ----------------------------")
+    
 def ativar_inativar_usuario():
-        lista_usuarios ()
-
+        listar_usuarios ()
+        print("----------------------- ATIVAR/INATIVAR USUÁRIO ----------------------------")
         if not lista_usuarios:
          return
     
@@ -101,3 +101,4 @@ def ativar_inativar_usuario():
             print(f"Status de {usuario['Nome']} alterado para {novo_status}.")
             return
         print("Usuário não encontrado.")
+
